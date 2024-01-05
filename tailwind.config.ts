@@ -17,5 +17,6 @@ const config: Config = {
   },
   plugins: [],
   important: true,
+  safelist: ["bg-[#5651e5]", "bg-gray-200", "rounded-lg"],
 }
 export default config
