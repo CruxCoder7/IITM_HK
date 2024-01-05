@@ -13,6 +13,7 @@ export default function Simulate() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
+
       console.log(data.data)
       setName(data.data.name)
       setIsHigh(data.data.high_spender)

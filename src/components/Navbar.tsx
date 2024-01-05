@@ -3,6 +3,7 @@ import axios from "axios"
 import { Anton } from "next/font/google"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import getData from "../jwt"
 
 const AntonFont = Anton({
   weight: ["400"],
@@ -14,22 +15,28 @@ export default function Navbar() {
 
   useEffect(() => {
     const token = localStorage.getItem("token")
-    async function check() {
-      const data = await axios.post(
-        "http://localhost:5000/verify",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      const { name, phone_num } = data.data
-      setName(name)
+    if (!token) {
+      return
     }
-    if (token) {
-      check()
-    }
+    const user = getData(token)
+    console.log(user)
+    if (!user) return
+    // @ts-ignore
+    setName(user.name)
+    // if (!token) return
+    // async function check() {
+    //   const data = await axios.post(
+    //     "http://localhost:5000/verify",
+    //     {},
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${token}`,
+    //       },
+    //     }
+    //   )
+    //   const { name, phone_num } = data.data
+    // }
+    // if (token) check()
   }, [])
 
   return (

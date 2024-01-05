@@ -15,6 +15,7 @@ export default function Login() {
     })
 
     const token = data.data
+    console.log(token)
     localStorage.setItem("token", token)
     router.replace("http://localhost:3000/")
   }
