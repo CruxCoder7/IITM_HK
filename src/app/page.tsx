@@ -6,6 +6,7 @@ import { useDropzone } from "react-dropzone"
 import { Box, Modal, Typography } from "@mui/material"
 import { IoClose } from "react-icons/io5"
 import UploadButton from "../components/UploadButton"
+import { useRouter } from "next/navigation"
 
 export default function Home() {
   const [open, setOpen] = useState(false)
@@ -24,10 +25,25 @@ export default function Home() {
     <li key={file.name}>{file.name}</li>
   ))
 
+  const router = useRouter()
+
   const handleUpload = async (event: any) => {
     event.preventDefault()
     const formData = new FormData()
     formData.append("file", file as Blob)
+
+    try {
+      await fetch("http://localhost:5000/upload", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      router.push("/simulate")
+    } catch (error) {
+      console.error("Error:", error)
+    }
   }
 
   return (
@@ -65,7 +81,7 @@ export default function Home() {
                 component="h2"
                 className={``}
               >
-                Upload PDF
+                Upload CSV
               </Typography>
               <div className="mt-4">
                 <div
@@ -74,7 +90,7 @@ export default function Home() {
                 >
                   <input {...getInputProps()} />
                   <p className={`cursor-pointer text-center `}>
-                    Drag and drop a pdf here, or click to select pdf
+                    Drag and drop a csv here, or click to select csv
                   </p>
                 </div>
                 {file !== null && (

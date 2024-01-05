@@ -38,10 +38,15 @@ export default function Navbar() {
         <h2 className={`${AntonFont.className}`}>CYBERPUNKS</h2>
         <div className="flex gap-5 items-center justify-center">
           <h2 className="text-[#5651e5] cursor-pointer font-medium">
-            Dashboard
+            <Link
+              href={"#"}
+              onClick={() => window.location.replace("http://localhost:8501")}
+            >
+              Dashboard
+            </Link>
           </h2>
           <h2 className="text-[#5651e5] cursor-pointer font-medium">
-            Simulate
+            <Link href={"/simulate"}>Simulate</Link>
           </h2>
           <h2 className="text-[#5651e5] cursor-pointer font-medium">
             {name === "" ? (
